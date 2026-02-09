@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import type { FastifyInstance } from 'fastify';
+import type { FastifyError, FastifyInstance } from 'fastify';
 
 import { AppError, ValidationError } from './lib/errors.js';
 import { loggerConfig } from './lib/logger.js';
@@ -39,7 +39,7 @@ export async function buildApp(
 
   // ── Error Handler ────────────────────────────
 
-  fastify.setErrorHandler((error, request, reply) => {
+  fastify.setErrorHandler((error: FastifyError, request, reply) => {
     // Handle application errors
     if (error instanceof AppError) {
       const payload: Record<string, unknown> = {

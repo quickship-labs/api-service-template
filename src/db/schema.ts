@@ -20,7 +20,9 @@ export const users = pgTable(
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [index('users_email_idx').on(table.email)],
+  (table) => ({
+    usersEmailIdx: index('users_email_idx').on(table.email),
+  }),
 );
 
 // ──────────────────────────────────────────────
@@ -39,10 +41,10 @@ export const refreshTokens = pgTable(
     revokedAt: timestamp('revoked_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [
-    index('refresh_tokens_user_id_idx').on(table.userId),
-    index('refresh_tokens_token_idx').on(table.token),
-  ],
+  (table) => ({
+    refreshTokensUserIdIdx: index('refresh_tokens_user_id_idx').on(table.userId),
+    refreshTokensTokenIdx: index('refresh_tokens_token_idx').on(table.token),
+  }),
 );
 
 // ──────────────────────────────────────────────
@@ -65,10 +67,10 @@ export const items = pgTable(
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [
-    index('items_user_id_idx').on(table.userId),
-    index('items_status_idx').on(table.status),
-  ],
+  (table) => ({
+    itemsUserIdIdx: index('items_user_id_idx').on(table.userId),
+    itemsStatusIdx: index('items_status_idx').on(table.status),
+  }),
 );
 
 // ──────────────────────────────────────────────

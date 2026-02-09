@@ -1,5 +1,4 @@
 import type { JWT } from '@fastify/jwt';
-import type { FastifyInstance, FastifyRequest } from 'fastify';
 
 // ──────────────────────────────────────────────
 // JWT Payload

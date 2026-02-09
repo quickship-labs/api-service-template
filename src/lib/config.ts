@@ -28,6 +28,17 @@ const envSchema = z.object({
 export type Env = z.infer<typeof envSchema>;
 
 function loadConfig(): Env {
+  // Skip validation in test environment
+  if (process.env.NODE_ENV === 'test' || process.env.VITEST) {
+    return envSchema.parse({
+      NODE_ENV: 'test',
+      DATABASE_URL: 'postgresql://test:test@localhost:5432/test',
+      REDIS_URL: 'redis://localhost:6379',
+      JWT_SECRET: 'test-secret-that-is-at-least-32-characters-long',
+      ...process.env,
+    });
+  }
+
   const result = envSchema.safeParse(process.env);
 
   if (!result.success) {
